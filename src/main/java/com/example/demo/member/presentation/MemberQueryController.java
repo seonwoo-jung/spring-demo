@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.common.ApiResponse;
+import com.example.demo.member.application.MemberQueryService;
 import com.example.demo.member.application.MemberService;
 import com.example.demo.member.presentation.dto.in.MemberLoginRequest;
 import com.example.demo.member.presentation.dto.in.RegisterMemberRequest;
@@ -22,12 +23,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/v1/members")
 @Tag(name = "01. 회원")
-public class MemberController {
+public class MemberQueryController {
 
-	private final MemberService memberService;
+	private final MemberQueryService memberQueryService;
 
-	@PostMapping
-	public ApiResponse<Long> registerMember(@RequestBody @Valid RegisterMemberRequest request) {
-		return ApiResponse.success(memberService.registerMember(request));
+	@GetMapping
+	public ApiResponse<List<MemberResponse>> findAllMember() {
+		return ApiResponse.success(memberQueryService.findAllMember());
+	}
+
+	@PostMapping("/login")
+	public ApiResponse<MemberResponse> login(@RequestBody @Valid MemberLoginRequest request) {
+		return ApiResponse.success(memberQueryService.login(request));
 	}
 }

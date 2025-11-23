@@ -6,6 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ProviderType {
+	LOCAL("일반"),
 	KAKAO("카카오"),
 	NAVER("네이버"),
 	GOOGLE("구글"),

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.member.domain.Member;
 import com.example.demo.member.domain.MemberAuth;
 import com.example.demo.member.presentation.dto.in.MemberLoginRequest;
-import com.example.demo.member.presentation.dto.in.RegisterMemberRequest;
 import com.example.demo.member.presentation.dto.out.MemberResponse;
 import com.example.demo.member.repository.command.MemberRepository;
 import com.example.demo.member.repository.query.MemberAuthQueryRepository;
@@ -18,26 +17,22 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MemberService {
+public class MemberQueryService {
 
+	private final MemberAuthQueryRepository memberAuthQueryRepository;
 	private final MemberRepository memberRepository;
 
-	public Long registerMember(RegisterMemberRequest request) {
+	public List<MemberResponse> findAllMember() {
+		List<Member> members = memberRepository.findAll();
+		return members.stream()
+			.map(MemberResponse::from)
+			.toList();
+	}
 
-		MemberAuth auth = MemberAuth.create(
-			request.provider(),
-			request.uid(),
-			request.password()
-		);
+	public MemberResponse login(MemberLoginRequest request) {
+		MemberAuth memberAuth = memberAuthQueryRepository.findByUidAndPassword(request.email(), request.password())
+			.orElseThrow(() -> new IllegalArgumentException("로그인 실패"));
 
-		Member member = Member.create(
-			request.nickname(),
-			request.phoneNumber(),
-			auth
-		);
-
-		memberRepository.save(member);
-
-		return member.getId();
+		return MemberResponse.from(memberAuth);
 	}
 }

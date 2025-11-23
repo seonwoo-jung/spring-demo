@@ -2,9 +2,8 @@ package com.example.demo.member.presentation.dto.out;
 
 import java.util.List;
 
-import com.example.demo.member.domain.LoginType;
 import com.example.demo.member.domain.Member;
-import com.example.demo.member.domain.MemberSocial;
+import com.example.demo.member.domain.MemberAuth;
 import com.example.demo.member.domain.ProviderType;
 
 import lombok.Builder;
@@ -14,7 +13,6 @@ public record MemberResponse(
 	Long memberId,
 	String nickname,
 	String email,
-	LoginType loginType,
 	List<MemberSocialResponse> social
 ) {
 
@@ -22,9 +20,17 @@ public record MemberResponse(
 		return MemberResponse.builder()
 			.memberId(member.getId())
 			.nickname(member.getNickname())
-			.email(member.getEmail())
-			.loginType(member.getLoginType())
-			.social(member.getSocials().stream().map(MemberSocialResponse::from).toList())
+			// .loginType(member.getLoginType())
+			// .social(member.getSocials().stream().map(MemberSocialResponse::from).toList())
+			.build();
+	}
+
+	public static MemberResponse from(MemberAuth memberAuth) {
+		return MemberResponse.builder()
+			.memberId(memberAuth.getMember().getId())
+			.nickname(memberAuth.getMember().getNickname())
+			// .loginType(member.getLoginType())
+			// .social(member.getSocials().stream().map(MemberSocialResponse::from).toList())
 			.build();
 	}
 
@@ -35,11 +41,11 @@ public record MemberResponse(
 		ProviderType provider
 	) {
 
-		public static MemberSocialResponse from(MemberSocial memberSocial) {
+		public static MemberSocialResponse from(MemberAuth memberAuth) {
 			return MemberSocialResponse.builder()
-				.memberSocialId(memberSocial.getId())
-				.uid(memberSocial.getUid())
-				.provider(memberSocial.getProvider())
+				.memberSocialId(memberAuth.getId())
+				.uid(memberAuth.getUid())
+				.provider(memberAuth.getProvider())
 				.build();
 		}
 	}
