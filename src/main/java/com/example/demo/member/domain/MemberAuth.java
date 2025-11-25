@@ -6,6 +6,8 @@ import static lombok.AccessLevel.*;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.example.demo.common.BaseTimeEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -36,7 +38,7 @@ import lombok.ToString;
 			columnNames = {"provider", "uid"}
 		)
 	})
-public class MemberAuth {
+public class MemberAuth extends BaseTimeEntity<MemberAuth, Long> {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
