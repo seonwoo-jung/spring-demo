@@ -3,6 +3,7 @@ package com.example.demo.member.domain;
 import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,29 @@ public class Member {
 	private String nickname;
 
 	private String phoneNumber;
+
+	// 레거시 시작
+	private String companyName;
+
+	private Integer userLevel;
+
+	private boolean isStaff;
+
+	private boolean isActive;
+
+	private boolean isSuperuser;
+
+	private String userType;
+
+	private String adminType;
+
+	private LocalDateTime withdrawnAt;
+
+	private String userStatus;
+
+	private Boolean isMigration;
+
+	private LocalDateTime lastLogin;
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 	@Builder.Default

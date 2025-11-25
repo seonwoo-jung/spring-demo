@@ -1,17 +1,12 @@
 package com.example.demo.member.application;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.member.domain.Member;
 import com.example.demo.member.domain.MemberAuth;
-import com.example.demo.member.presentation.dto.in.MemberLoginRequest;
 import com.example.demo.member.presentation.dto.in.RegisterMemberRequest;
-import com.example.demo.member.presentation.dto.out.MemberResponse;
 import com.example.demo.member.repository.command.MemberRepository;
-import com.example.demo.member.repository.query.MemberAuthQueryRepository;
 
 import lombok.RequiredArgsConstructor;
 
